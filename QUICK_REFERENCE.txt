@@ -1,0 +1,154 @@
+🧠 MODELMIND - QUICK REFERENCE
+═════════════════════════════════════════════════════════════════
+
+📁 LOCATION:
+   d:\modelmind\
+
+📦 FILES (18 total):
+   ✅ app.py
+   ✅ api.py  
+   ✅ requirements.txt
+   ✅ .env.example
+   ✅ README.md
+   ✅ INSTALLATION.md
+   ✅ SETUP_GUIDE.txt
+   ✅ ml_engine/ (4 files)
+   ✅ gemini_engine/ (4 files)
+   ✅ report/ (1 file)
+
+═════════════════════════════════════════════════════════════════
+
+🔑 API KEY - WHERE & HOW:
+
+1️⃣  GET YOUR KEY:
+    https://ai.google.dev/
+    → Click "Get API Key"
+    → Copy the key
+
+2️⃣  OPEN .env FILE:
+    Open: d:\modelmind\.env.example
+
+3️⃣  ADD YOUR KEY:
+    Find: GEMINI_API_KEY=your-api-key-here
+    Replace with: GEMINI_API_KEY=AIzaSy...
+
+4️⃣  SAVE FILE
+
+That's it! Code will read it automatically.
+
+═════════════════════════════════════════════════════════════════
+
+🚀 3-STEP STARTUP:
+
+Step 1 - Install (one time):
+  pip install -r requirements.txt
+
+Step 2 - Terminal 1:
+  python api.py
+
+Step 3 - Terminal 2:
+  streamlit run app.py
+
+Then open: http://localhost:8501
+
+═════════════════════════════════════════════════════════════════
+
+✨ WHAT TO UPLOAD:
+
+Models:
+  ✓ .h5 (TensorFlow)
+  ✓ .pt (PyTorch)
+  ✓ .pth (PyTorch)
+  ✓ .pkl (Pickle)
+
+Logs (optional):
+  ✓ .csv
+  ✓ .json
+  ✓ .txt
+
+═════════════════════════════════════════════════════════════════
+
+📊 WHAT YOU GET:
+
+1. Model parsing
+2. Issue detection
+3. Gemini AI analysis
+4. Improvements suggested
+5. Experiment plan
+6. Formatted report
+7. Download results
+
+═════════════════════════════════════════════════════════════════
+
+🔧 FILE PURPOSES:
+
+app.py              Web UI (Streamlit)
+api.py              API server (FastAPI)
+
+ml_engine/
+  model_parser.py   Parse model files
+  training_analyzer.py  Analyze logs
+  error_miner.py    Find issues
+  explainability.py Explain results
+
+gemini_engine/
+  prompts.py        Prompt templates
+  reasoner.py       Call Gemini
+  planner.py        Plan experiments
+  reviewer.py       Review quality
+
+report/
+  generate_report.py  Create reports
+
+═════════════════════════════════════════════════════════════════
+
+⚡ FEATURES:
+
+✓ Upload any model
+✓ Auto-detect issues
+✓ Gemini AI analysis
+✓ Code improvements
+✓ Experiment planning
+✓ Generate reports
+✓ Download results
+
+═════════════════════════════════════════════════════════════════
+
+🆘 QUICK FIXES:
+
+API not starting?
+  → Check: GEMINI_API_KEY in .env
+  → Run: python api.py
+
+Streamlit error?
+  → Run: streamlit run app.py
+
+File upload fails?
+  → Check file format (.h5, .pt, .pkl)
+  → Check file size
+
+═════════════════════════════════════════════════════════════════
+
+📝 SIMPLE WORKFLOW:
+
+Browser → Upload Model
+  ↓
+app.py sends to api.py
+  ↓
+Parses & Analyzes
+  ↓
+Calls Gemini API
+  ↓
+Generates Report
+  ↓
+Shows Results
+  ↓
+Download Report
+
+═════════════════════════════════════════════════════════════════
+
+✅ READY TO GO!
+
+No errors. No complexity. Just clean, working code.
+
+Happy debugging! 🚀
