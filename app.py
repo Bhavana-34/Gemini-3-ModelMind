@@ -2,16 +2,21 @@ import streamlit as st
 import requests
 import json
 from pathlib import Path
+import os
+from config import API_BASE_URL
 
 st.set_page_config(page_title="ModelMind", page_icon="🧠", layout="wide")
+
+
+API_URL = os.getenv("API_BASE_URL", API_BASE_URL)
 
 st.title("🧠 ModelMind - ML Model Analyzer")
 st.markdown("AI-powered model debugging with Gemini")
 st.markdown("---")
 
-# Check API health
+
 try:
-    response = requests.get("http://localhost:8000/health", timeout=2)
+    response = requests.get(f"{API_URL}/health", timeout=2)
     if response.status_code == 200:
         st.success("✅ API Connected")
     else:
@@ -44,7 +49,7 @@ if st.button("🚀 Analyze", use_container_width=True):
     else:
         with st.spinner("Analyzing with Gemini..."):
             try:
-                # Prepare files
+              
                 files = {
                     "model_file": model_file
                 }
@@ -52,9 +57,9 @@ if st.button("🚀 Analyze", use_container_width=True):
                 if logs_file:
                     files["logs_file"] = logs_file
                 
-                # Send to API
+               
                 response = requests.post(
-                    "http://localhost:8000/analyze",
+                    f"{API_URL}/analyze",
                     files={
                         "model_file": (model_file.name, model_file.getvalue()),
                         "logs_file": (logs_file.name, logs_file.getvalue()) if logs_file else None
@@ -66,11 +71,10 @@ if st.button("🚀 Analyze", use_container_width=True):
                     
                     st.success("✅ Analysis Complete!")
                     
-                    # Display results
+                 
                     st.markdown("---")
                     st.header("📊 Results")
-                    
-                    # Model info
+            
                     st.subheader("Model Information")
                     col1, col2, col3 = st.columns(3)
                     with col1:
@@ -80,7 +84,7 @@ if st.button("🚀 Analyze", use_container_width=True):
                     with col3:
                         st.metric("Parameters", result["model_info"].get("parameters", "Unknown"))
                     
-                    # Issues
+                   
                     if result["issues"]:
                         st.subheader("❌ Issues Found")
                         for issue in result["issues"]:
@@ -89,15 +93,15 @@ if st.button("🚀 Analyze", use_container_width=True):
                     else:
                         st.success("No issues found!")
                     
-                    # Analysis
+                   
                     st.subheader("🔍 Gemini Analysis")
                     st.write(result["analysis"])
                     
-                    # Improvements
+                  
                     st.subheader("💡 Improvements")
                     st.write(result["improvements"])
                     
-                    # Report
+                    
                     st.subheader("📄 Full Report")
                     with open(result["report_path"], 'r') as f:
                         report = f.read()

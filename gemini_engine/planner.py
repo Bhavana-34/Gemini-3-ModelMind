@@ -13,7 +13,7 @@ genai.configure(api_key=API_KEY)
 
 
 class Planner:
-    """Plan experiments using Gemini"""
+    
     
     @staticmethod
     def plan_experiments(model_info, current_performance):
