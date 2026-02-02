@@ -1,0 +1,61 @@
+🚀 QUICK START GUIDE - ModelMind
+================================
+
+✅ ALL ERRORS FIXED! Your project is ready to run.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Start API Server (Terminal 1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+D:/modelmind/.venv/Scripts/python.exe api.py
+
+✅ Wait for: "Application startup complete"
+✅ Server will run on: http://localhost:8000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 2: Start Streamlit UI (Terminal 2)  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+D:/modelmind/.venv/Scripts/python.exe -m streamlit run app.py
+
+✅ Browser will auto-open at: http://localhost:8501
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 3: Upload & Analyze Your Model
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Click "Browse files" 
+2. Select your model file (.pkl, .pt, .pth)
+3. Optionally add training logs
+4. Click "🚀 Analyze"
+5. Get AI-powered insights from Gemini 2.5!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+What Was Fixed?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Encoding error fixed (charmap codec)
+✅ UTF-8 encoding added to all file operations
+✅ Gemini API upgraded to latest version
+✅ Model updated to gemini-2.5-flash
+✅ API key verified and working
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Troubleshooting
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Port 8000 in use?
+   → Change port in api.py line 99: port=8001
+
+❌ Gemini API error?
+   → Check .env file has: GEMINI_API_KEY=your-key
+   → Get new key: https://aistudio.google.com/apikey
+
+❌ Module not found?
+   → Run: D:/modelmind/.venv/Scripts/python.exe -m pip install -r requirements.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Need help? Check FIXES_APPLIED.md for detailed documentation.
+
+Happy analyzing! 🧠✨

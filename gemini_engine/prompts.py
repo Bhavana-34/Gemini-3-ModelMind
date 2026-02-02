@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-import google.generativeai as genai
 
 load_dotenv()
 
@@ -8,8 +7,6 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not API_KEY or API_KEY == "your-api-key-here":
     raise ValueError("❌ GEMINI_API_KEY not set in .env file!")
-
-genai.configure(api_key=API_KEY)
 
 
 class Prompts:

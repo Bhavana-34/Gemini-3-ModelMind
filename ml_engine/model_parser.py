@@ -1,9 +1,19 @@
 import os
 import json
 import pickle
-import tensorflow as tf
-import torch
 from pathlib import Path
+
+try:
+    import tensorflow as tf
+    HAS_TF = True
+except ImportError:
+    HAS_TF = False
+
+try:
+    import torch
+    HAS_TORCH = True
+except ImportError:
+    HAS_TORCH = False
 
 
 class ModelParser:
@@ -26,6 +36,8 @@ class ModelParser:
     @staticmethod
     def parse_tensorflow(filepath):
         """Parse TensorFlow model"""
+        if not HAS_TF:
+            return {"error": "TensorFlow not installed. Install with: pip install tensorflow"}
         try:
             model = tf.keras.models.load_model(filepath, compile=False)
             return {
@@ -41,6 +53,8 @@ class ModelParser:
     @staticmethod
     def parse_pytorch(filepath):
         """Parse PyTorch model"""
+        if not HAS_TORCH:
+            return {"error": "PyTorch not installed. Install with: pip install torch"}
         try:
             checkpoint = torch.load(filepath, map_location='cpu')
             return {
@@ -48,6 +62,8 @@ class ModelParser:
                 "loaded": True,
                 "checkpoint_keys": list(checkpoint.keys()) if isinstance(checkpoint, dict) else ["model"]
             }
+        except Exception as e:
+            return {"error": str(e)}
         except Exception as e:
             return {"error": str(e)}
     

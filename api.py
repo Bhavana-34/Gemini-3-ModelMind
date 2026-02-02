@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 import shutil
 from pathlib import Path
+import json
 
 from ml_engine.model_parser import ModelParser
 from ml_engine.training_analyzer import TrainingAnalyzer
@@ -22,28 +23,42 @@ Path("storage/reports").mkdir(parents=True, exist_ok=True)
 async def analyze_model(model_file: UploadFile = File(...), logs_file: UploadFile = None):
     """Upload and analyze model"""
     try:
-        
+        # Save model file
         model_path = f"storage/uploads/{model_file.filename}"
         with open(model_path, "wb") as f:
-            f.write(await model_file.read())
+            shutil.copyfileobj(model_file.file, f)
         
-   
+        # Parse model
         model_info = ModelParser.parse(model_path)
-     
+        
+        # Analyze logs if provided
         logs_info = {}
         if logs_file:
-            logs_content = (await logs_file.read()).decode()
-            logs_info = TrainingAnalyzer.analyze_logs(logs_content)
+            try:
+                logs_content = (await logs_file.read()).decode()
+                logs_info = TrainingAnalyzer.analyze_logs(logs_content)
+            except Exception as log_err:
+                print(f"Log analysis error: {log_err}")
+                logs_info = {}
         
-      
+        # Find issues
         issues = ErrorMiner.find_issues(model_info, logs_info.get("metrics", {}))
         
-        analysis_result = Reasoner.analyze(model_info, issues)
+        # Get Gemini analysis
+        try:
+            analysis_result = Reasoner.analyze(model_info, issues)
+        except Exception as gemini_err:
+            print(f"Gemini analysis error: {gemini_err}")
+            analysis_result = {"analysis": f"Analysis failed: {str(gemini_err)}"}
         
-       
-        improvements = Reasoner.get_improvements(model_info)
+        # Get improvements
+        try:
+            improvements = Reasoner.get_improvements(model_info)
+        except Exception as improve_err:
+            print(f"Improvement error: {improve_err}")
+            improvements = {"improvements": f"Improvements failed: {str(improve_err)}"}
         
-       
+        # Generate report
         report_text = ReportGenerator.generate(
             model_info,
             analysis_result.get("analysis", "No analysis"),
@@ -53,19 +68,24 @@ async def analyze_model(model_file: UploadFile = File(...), logs_file: UploadFil
         
         report_path = ReportGenerator.save_report(report_text)
         
-        return JSONResponse({
+        return {
             "status": "success",
             "model_info": model_info,
             "issues": issues,
             "analysis": analysis_result.get("analysis", ""),
             "improvements": improvements.get("improvements", ""),
             "report_path": report_path
-        })
+        }
     
     except Exception as e:
+        print(f"Main error: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        # Ensure error message is ASCII-safe for JSON response
+        error_msg = str(e).encode('ascii', 'ignore').decode('ascii')
         return JSONResponse({
             "status": "error",
-            "error": str(e)
+            "error": error_msg
         }, status_code=400)
 
 

@@ -103,7 +103,7 @@ if st.button("🚀 Analyze", use_container_width=True):
                     
                     
                     st.subheader("📄 Full Report")
-                    with open(result["report_path"], 'r') as f:
+                    with open(result["report_path"], 'r', encoding='utf-8') as f:
                         report = f.read()
                     st.download_button(
                         "Download Report",
@@ -114,6 +114,8 @@ if st.button("🚀 Analyze", use_container_width=True):
                 else:
                     st.error(f"Error: {response.text}")
             
+            except requests.exceptions.JSONDecodeError as e:
+                st.error(f"JSON Decode Error: {str(e)}")
             except Exception as e:
                 st.error(f"Error: {str(e)}")
 
